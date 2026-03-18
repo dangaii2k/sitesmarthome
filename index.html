@@ -114,6 +114,19 @@ main{max-width:1320px;margin:0 auto;padding:30px 36px;}
 @media(max-width:900px){.sensors-row,.rooms-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:700px){nav{display:none;}main{padding:20px 16px;}header{padding:0 16px;}.sensors-row,.rooms-grid{grid-template-columns:1fr 1fr;}.hero{flex-direction:column;gap:20px;}.hero-clock{text-align:left;}}
 @media(max-width:480px){.sensors-row,.rooms-grid{grid-template-columns:1fr;}}
+/* Profile dropdown */
+.profile-wrap{position:relative;}
+.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:220px;padding:6px;border-radius:var(--r2);z-index:100;display:none;}
+.profile-dropdown.open{display:block;animation:pdrop .2s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pdrop{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.pd-user{padding:12px 14px;border-radius:var(--r3);margin-bottom:6px;}
+.pd-name{font-size:15px;font-weight:800;}
+.pd-login{font-size:12px;color:var(--t3);margin-top:2px;}
+.pd-divider{height:1px;background:var(--border);margin:4px 0;}
+.pd-btn{width:100%;padding:10px 14px;border-radius:var(--r3);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:left;transition:.2s;display:flex;align-items:center;gap:8px;background:transparent;color:var(--t2);}
+.pd-btn:hover{background:rgba(255,185,80,.1);color:var(--t1);}
+.pd-btn.logout{color:#ff9060;}
+.pd-btn.logout:hover{background:rgba(255,100,60,.12);color:#ffb090;}
 </style>
 </head>
 <body>
@@ -131,7 +144,17 @@ main{max-width:1320px;margin:0 auto;padding:30px 36px;}
     </nav>
     <div class="hright">
       <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--t2);" class="gd"><span class="dot-o"></span>Онлайн</div>
-      <div class="ava" id="ava" onclick="location.href='authorization.html'">?</div>
+      <div class="profile-wrap">
+        <div class="ava" id="ava" onclick="toggleProfile()">?</div>
+        <div class="profile-dropdown gd" id="profile-dd">
+          <div class="pd-user gi">
+            <div class="pd-name" id="pd-name">—</div>
+            <div class="pd-login" id="pd-login">—</div>
+          </div>
+          <div class="pd-divider"></div>
+          <button class="pd-btn logout" onclick="doLogout()">🚪 Выйти из системы</button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -281,6 +304,20 @@ if(!user) location.href='authorization.html';
 if(user){
   document.getElementById('hero-name').textContent = user.name;
   document.getElementById('ava').textContent = user.name[0].toUpperCase();
+  document.getElementById('pd-name').textContent = user.name;
+  document.getElementById('pd-login').textContent = '@' + user.username;
+}
+
+// Profile dropdown
+function toggleProfile(){
+  document.getElementById('profile-dd').classList.toggle('open');
+}
+document.addEventListener('click', e=>{
+  const wrap = document.querySelector('.profile-wrap');
+  if(wrap && !wrap.contains(e.target)) document.getElementById('profile-dd').classList.remove('open');
+});
+function doLogout(){
+  location.href='authorization.html?logout=1';
 }
 
 // ── CLOCK ──

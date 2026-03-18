@@ -101,6 +101,18 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 @media(max-width:800px){.ctrl-grid{grid-template-columns:1fr;}.sensors-2{grid-template-columns:1fr 1fr;}}
 @media(max-width:700px){nav{display:none;}main{padding:20px 16px;}header{padding:0 16px;}}
 @media(max-width:500px){.sensors-2,.sock-grid{grid-template-columns:1fr;}}
+.profile-wrap{position:relative;}
+.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:220px;padding:6px;border-radius:var(--r2);z-index:100;display:none;}
+.profile-dropdown.open{display:block;animation:pdrop .2s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pdrop{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.pd-user{padding:12px 14px;border-radius:var(--r3);margin-bottom:6px;}
+.pd-name{font-size:15px;font-weight:800;}
+.pd-login{font-size:12px;color:var(--t3);margin-top:2px;}
+.pd-divider{height:1px;background:var(--border);margin:4px 0;}
+.pd-btn{width:100%;padding:10px 14px;border-radius:var(--r3);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:left;transition:.2s;display:flex;align-items:center;gap:8px;background:transparent;color:var(--t2);}
+.pd-btn:hover{background:rgba(255,185,80,.1);color:var(--t1);}
+.pd-btn.logout{color:#ff9060;}
+.pd-btn.logout:hover{background:rgba(255,100,60,.12);color:#ffb090;}
 </style>
 </head>
 <body>
@@ -118,7 +130,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
     </nav>
     <div class="hright">
       <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--t2);" class="gd"><span class="dot-o"></span>Онлайн</div>
-      <div class="ava" id="ava">?</div>
+      <div class="profile-wrap">
+        <div class="ava" id="ava" onclick="toggleProfile()">?</div>
+        <div class="profile-dropdown gd" id="profile-dd">
+          <div class="pd-user gi"><div class="pd-name" id="pd-name">—</div><div class="pd-login" id="pd-login">—</div></div>
+          <div class="pd-divider"></div>
+          <button class="pd-btn logout" onclick="location.href='authorization.html?logout=1'">🚪 Выйти</button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -275,7 +294,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 <script>
 function getSession(){try{return JSON.parse(localStorage.getItem('sh_user'));}catch{return null;}}
 const user=getSession();if(!user)location.href='authorization.html';
-if(user){document.getElementById('ava').textContent=user.name[0].toUpperCase();}
+if(user){
+  document.getElementById('ava').textContent=user.name[0].toUpperCase();
+  document.getElementById('pd-name').textContent=user.name;
+  document.getElementById('pd-login').textContent='@'+user.username;
+}
+function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');}
+document.addEventListener('click',e=>{const w=document.querySelector('.profile-wrap');if(w&&!w.contains(e.target))document.getElementById('profile-dd').classList.remove('open');});
 setInterval(()=>{const n=new Date();document.getElementById('r1-clock').textContent=n.toTimeString().split(' ')[0].slice(0,5);},1000);
 document.getElementById('r1-clock').textContent=new Date().toTimeString().split(' ')[0].slice(0,5);
 
