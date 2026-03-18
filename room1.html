@@ -7,10 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{--r:22px;--r2:16px;--r3:12px;--t1:#fff;--t2:rgba(255,225,190,.75);--t3:rgba(255,200,160,.45);--card:rgba(30,12,2,.58);--border:rgba(255,185,100,.22);--sh:0 8px 36px rgba(0,0,0,.35);--sh2:0 20px 60px rgba(0,0,0,.5);}
+:root{
+  --r:22px;--r2:16px;--r3:12px;
+  --t1:#fff;--t2:rgba(255,225,190,.75);--t3:rgba(255,200,160,.45);
+  --card:rgba(30,12,2,.58);--border:rgba(255,185,100,.22);
+  --sh:0 8px 36px rgba(0,0,0,.35);--sh2:0 20px 60px rgba(0,0,0,.5);
+}
 html{scroll-behavior:smooth;}
 body{font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;color:var(--t1);background:#1a0a02;}
-.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 70% 50% at 5% 0%,#b34400,transparent 55%),radial-gradient(ellipse 55% 45% at 95% 5%,#9e3800,transparent 50%),radial-gradient(ellipse 60% 50% at 50% 105%,#6b1e00,transparent 55%),radial-gradient(ellipse 45% 38% at 78% 55%,#7d2a00,transparent 50%),#1a0a02;}
+.bg{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(ellipse 70% 50% at 5% 0%,#b34400,transparent 55%),
+  radial-gradient(ellipse 55% 45% at 95% 5%,#9e3800,transparent 50%),
+  radial-gradient(ellipse 60% 50% at 50% 105%,#6b1e00,transparent 55%),
+  radial-gradient(ellipse 45% 38% at 78% 55%,#7d2a00,transparent 50%),#1a0a02;}
 .bg::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");}
 .orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:1;}
 .o1{width:700px;height:700px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(230,95,10,.7),transparent 70%);}
@@ -24,22 +33,30 @@ header{position:sticky;top:0;z-index:50;background:rgba(14,5,0,.65);backdrop-fil
 .logo{font-size:20px;font-weight:800;color:var(--t1);text-decoration:none;}
 .logo span{background:linear-gradient(130deg,#ffb347,#ff7a00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 nav{display:flex;gap:4px;}
-.ni{padding:8px 16px;border-radius:100px;font-size:13px;font-weight:600;color:var(--t3);cursor:pointer;text-decoration:none;transition:.2s;}
+.ni{padding:8px 16px;border-radius:100px;font-size:13px;font-weight:600;color:var(--t3);text-decoration:none;transition:.2s;}
 .ni:hover{background:rgba(255,185,80,.1);color:var(--t2);}
 .ni.active{background:rgba(255,175,70,.18);color:var(--t1);border:1px solid rgba(255,175,70,.3);}
-.hright{display:flex;align-items:center;gap:12px;}
-.dot-o{width:8px;height:8px;border-radius:50%;background:#ffaa44;box-shadow:0 0 10px rgba(255,170,68,.9);flex-shrink:0;animation:glow 2s infinite;}
-@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(255,170,68,.9);}50%{box-shadow:0 0 18px rgba(255,170,68,1),0 0 32px rgba(255,130,30,.5);}}
-.dot-g{width:8px;height:8px;border-radius:50%;background:#6fcf97;flex-shrink:0;}
-.ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ff9a3c,#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:800;cursor:pointer;}
+.hright{display:flex;align-items:center;gap:10px;}
+.ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ff9a3c,#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:800;cursor:pointer;flex-shrink:0;}
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;width:36px;height:36px;border-radius:10px;background:rgba(255,185,80,.08);border:1px solid rgba(255,185,100,.18);padding:7px 8px;transition:.2s;flex-shrink:0;}
+.burger:hover{background:rgba(255,185,80,.16);}
+.burger span{display:block;width:100%;height:2px;background:var(--t2);border-radius:2px;transition:transform .28s,opacity .2s;}
+.burger.open{background:rgba(255,175,60,.18);border-color:rgba(255,175,60,.4);}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+#mobile-nav{display:none;position:fixed;top:64px;right:16px;width:210px;z-index:99999;background:rgba(10,4,0,.97);backdrop-filter:blur(36px) saturate(1.8);-webkit-backdrop-filter:blur(36px) saturate(1.8);border:1px solid rgba(255,175,70,.2);border-radius:18px;padding:8px;flex-direction:column;gap:3px;box-shadow:0 20px 60px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,210,140,.1);}
+#mobile-nav.open{display:flex;animation:mnslide .22s cubic-bezier(.34,1.4,.64,1);}
+@keyframes mnslide{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:none;}}
+#mobile-nav a{padding:12px 14px;border-radius:12px;font-size:14px;font-weight:700;color:var(--t3);text-decoration:none;transition:.16s;display:flex;align-items:center;gap:10px;border:1px solid transparent;}
+#mobile-nav a:hover{background:rgba(255,185,80,.1);color:var(--t2);}
+#mobile-nav a.active{background:rgba(255,175,70,.18);color:var(--t1);border-color:rgba(255,175,70,.3);}
 main{max-width:1320px;margin:0 auto;padding:30px 36px;}
-/* Page header */
-.page-hero{padding:28px 32px;border-radius:var(--r);margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;}
+.page-hero{padding:22px 24px;border-radius:var(--r);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative;overflow:hidden;}
 .ph-glow{position:absolute;width:250px;height:250px;border-radius:50%;filter:blur(70px);top:-60px;right:-40px;background:rgba(255,154,60,.25);pointer-events:none;}
 .ph-icon{font-size:48px;margin-bottom:4px;}
 .ph-title{font-size:32px;font-weight:800;letter-spacing:-1px;}
 .ph-sub{font-size:14px;color:var(--t3);margin-top:4px;}
-/* Sensors */
 .sensors-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
 .sen{padding:20px 22px;border-radius:var(--r);position:relative;overflow:hidden;}
 .sen-glow{position:absolute;width:100px;height:100px;border-radius:50%;filter:blur(35px);top:-20px;right:-10px;pointer-events:none;opacity:.5;}
@@ -48,7 +65,6 @@ main{max-width:1320px;margin:0 auto;padding:30px 36px;}
 .sen-unit{font-size:12px;color:var(--t2);margin-top:3px;margin-bottom:10px;}
 .sen-bar{height:4px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden;}
 .sen-fill{height:100%;border-radius:100px;}
-/* Controls grid */
 .ctrl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
 .ctrl-card{padding:24px;border-radius:var(--r);}
 .ctrl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
@@ -65,17 +81,22 @@ main{max-width:1320px;margin:0 auto;padding:30px 36px;}
 .row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-radius:var(--r3);}
 .row-lbl{font-size:13px;font-weight:700;color:var(--t2);}
 .row-val{font-size:11px;font-weight:600;color:var(--t3);}
-.slr-row{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:7px;}
-.slr-val{color:var(--t1);font-weight:800;}
-input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:100px;outline:none;cursor:pointer;background:rgba(255,255,255,.12);margin-bottom:12px;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#ffb347,#e67e22);box-shadow:0 3px 12px rgba(255,140,40,.55);}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;}
-.badge-green{background:rgba(111,207,151,.15);color:#6fcf97;border:1px solid rgba(111,207,151,.25);}
-.badge-red{background:rgba(255,100,60,.15);color:#ff9060;border:1px solid rgba(255,100,60,.2);}
-.badge-orange{background:rgba(255,175,60,.18);color:#ffb347;border:1px solid rgba(255,175,60,.3);}
+/* Mode buttons */
+.mode-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.mode-btn{width:100%;padding:13px 8px;border-radius:var(--r3);border:1px solid rgba(255,185,100,.15);background:rgba(0,0,0,.2);color:var(--t3);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.18s;}
+.mode-btn:hover{border-color:rgba(255,185,100,.3);color:var(--t2);}
+.mode-btn.day-on{border-color:rgba(255,175,60,.5);background:rgba(255,175,60,.22);color:#fff;}
+.mode-btn.night-on{border-color:rgba(120,100,220,.5);background:rgba(120,100,220,.18);color:#c8b8ff;}
+/* Lockable block — dims+blocks when auto is on */
+.lockable{transition:opacity .25s,filter .25s;}
+.lockable.locked{opacity:.3;pointer-events:none;filter:brightness(.6);}
+/* Auto badge */
+.auto-badge{display:none;margin-top:8px;padding:8px 12px;border-radius:var(--r3);background:rgba(255,175,60,.1);border:1px solid rgba(255,175,60,.22);font-size:12px;font-weight:700;color:#ffb347;text-align:center;}
+.auto-badge.show{display:block;}
 /* Security */
 .sec-item{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-radius:var(--r3);margin-bottom:7px;}
 .sec-left{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:rgba(255,230,200,.85);}
+.dot-g{width:8px;height:8px;border-radius:50%;background:#6fcf97;flex-shrink:0;}
 .btn-test{padding:10px;border-radius:var(--r3);border:1px solid rgba(255,110,60,.25);background:rgba(200,60,20,.15);color:#ff9060;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;cursor:pointer;width:100%;transition:.2s;margin-top:12px;}
 .btn-test:hover{background:rgba(200,60,20,.28);}
 .fa{animation:faa 1s ease-in-out infinite;}
@@ -92,27 +113,87 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .sock-name{font-size:14px;font-weight:800;}
 .sock-pwr{font-size:11px;color:var(--t2);margin-top:3px;font-weight:600;}
 .total-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:var(--r3);}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;}
+.badge-green{background:rgba(111,207,151,.15);color:#6fcf97;border:1px solid rgba(111,207,151,.25);}
 .notif{position:fixed;bottom:26px;right:26px;background:rgba(14,5,0,.9);backdrop-filter:blur(32px);border:1px solid rgba(255,175,70,.3);border-radius:var(--r2);padding:13px 20px;font-size:14px;font-weight:700;color:var(--t1);z-index:999;box-shadow:0 8px 40px rgba(0,0,0,.55);animation:nsin .35s cubic-bezier(.34,1.56,.64,1);}
 @keyframes nsin{from{transform:translateX(120%) scale(.9);opacity:0;}to{transform:translateX(0) scale(1);opacity:1;}}
 @keyframes nout{from{opacity:1;}to{transform:translateX(110%);opacity:0;}}
 .divider{display:flex;align-items:center;gap:14px;margin:4px 0 16px;}
 .divline{flex:1;height:1px;background:rgba(255,175,70,.14);}
 .divtxt{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);}
+/* Profile dropdown */
+#profile-dropdown{display:none;position:fixed;top:74px;right:20px;width:240px;z-index:999999;border-radius:18px;padding:6px;background:rgba(20,8,0,.96);backdrop-filter:blur(32px) saturate(1.6);-webkit-backdrop-filter:blur(32px) saturate(1.6);border:1px solid rgba(255,185,100,.28);box-shadow:0 20px 60px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,210,140,.18);animation:ddopen .2s cubic-bezier(.34,1.4,.64,1);}
+#profile-dropdown.visible{display:block;}
+@keyframes ddopen{from{opacity:0;transform:translateY(-10px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+#profile-dropdown .dd-user{padding:13px 15px;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,185,100,.14);margin-bottom:5px;}
+#profile-dropdown .dd-name{font-size:15px;font-weight:800;color:#fff;}
+#profile-dropdown .dd-login{font-size:12px;color:rgba(255,200,160,.5);margin-top:3px;}
+#profile-dropdown .dd-sep{height:1px;background:rgba(255,185,100,.15);margin:4px 0;}
+#profile-dropdown .dd-btn{width:100%;padding:10px 14px;border-radius:12px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;background:transparent;color:#ff9060;transition:.18s;}
+#profile-dropdown .dd-btn:hover{background:rgba(255,90,50,.14);color:#ffb088;}
 @media(max-width:800px){.ctrl-grid{grid-template-columns:1fr;}.sensors-2{grid-template-columns:1fr 1fr;}}
-@media(max-width:700px){nav{display:none;}main{padding:20px 16px;}header{padding:0 16px;}}
+@media(max-width:700px){.burger{display:flex;}nav{display:none;}main{padding:20px 16px;}header{padding:0 16px;}}
 @media(max-width:500px){.sensors-2,.sock-grid{grid-template-columns:1fr;}}
-.profile-wrap{position:relative;}
-.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:220px;padding:6px;border-radius:var(--r2);z-index:100;display:none;}
-.profile-dropdown.open{display:block;animation:pdrop .2s cubic-bezier(.34,1.56,.64,1);}
-@keyframes pdrop{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-.pd-user{padding:12px 14px;border-radius:var(--r3);margin-bottom:6px;}
-.pd-name{font-size:15px;font-weight:800;}
-.pd-login{font-size:12px;color:var(--t3);margin-top:2px;}
-.pd-divider{height:1px;background:var(--border);margin:4px 0;}
-.pd-btn{width:100%;padding:10px 14px;border-radius:var(--r3);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:left;transition:.2s;display:flex;align-items:center;gap:8px;background:transparent;color:var(--t2);}
-.pd-btn:hover{background:rgba(255,185,80,.1);color:var(--t1);}
-.pd-btn.logout{color:#ff9060;}
-.pd-btn.logout:hover{background:rgba(255,100,60,.12);color:#ffb090;}
+
+
+/* ─── MOBILE ADAPTIVE ─── */
+@media(max-width:700px){.burger{display:flex;}nav{display:none;}main{padding:20px 14px;}header{padding:0 14px;}}
+
+@media(max-width:480px){
+  header{padding:0 14px;}
+  .hi{height:62px;}
+  .logo{font-size:19px;}
+  #mobile-nav{top:62px;}
+  .ava{width:38px;height:38px;font-size:16px;}
+  .burger{width:38px;height:38px;}
+  main{padding:14px 12px;}
+  .page-hero{flex-direction:column;align-items:flex-start;gap:8px;padding:16px;}
+  .ph-title{font-size:24px;}
+  .ph-icon{font-size:34px;margin-bottom:0;}
+  .ph-sub{font-size:12px;}
+  .sensors-2{grid-template-columns:1fr 1fr !important;}
+  .sen-val{font-size:26px;}
+  .ctrl-grid{grid-template-columns:1fr !important;}
+  .ctrl-card{padding:16px;}
+  .mode-btns{grid-template-columns:1fr 1fr;}
+  .mode-btn{padding:10px 6px;font-size:12px;}
+  .sock-grid{grid-template-columns:1fr 1fr !important;}
+  .status-grid{grid-template-columns:1fr 1fr !important;}
+  .ctrl-row{grid-template-columns:1fr !important;}
+  .row-lbl{font-size:12px;}
+  .row{padding:10px 12px;}
+  .pper{flex-wrap:wrap;gap:4px;}
+  .pp{padding:6px 12px;font-size:12px;}
+  .cw{height:170px;}
+  .chart-head,.charth{flex-direction:column;gap:8px;}
+  .chart-card{padding:16px;}
+  .notif{right:12px;left:12px;bottom:16px;font-size:13px;}
+  .cam-feed{aspect-ratio:4/3;}
+}
+
+@media(max-width:360px){
+  .logo{font-size:17px;}
+  .ph-title{font-size:20px;}
+  .sensors-2{grid-template-columns:1fr !important;}
+  .sock-grid,.mode-btns{grid-template-columns:1fr !important;}
+}
+
+
+/* ── Header bigger on mobile ── */
+@media(max-width:700px){
+  header{padding:0 16px;}
+  .hi{height:68px;}
+  .logo{font-size:21px;}
+  #mobile-nav{top:68px;}
+  .ava{width:40px;height:40px;font-size:17px;}
+  .burger{width:40px;height:40px;}
+}
+/* ── Fix time/status label alignment when hero wraps ── */
+.ph-right{text-align:right;}
+@media(max-width:600px){
+  .ph-right{text-align:left !important;}
+  .ph-right-flex{justify-content:flex-start !important;}
+}
 </style>
 </head>
 <body>
@@ -129,22 +210,21 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       <a class="ni" href="robot.html">🤖 Робот</a>
     </nav>
     <div class="hright">
-      <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--t2);" class="gd"><span class="dot-o"></span>Онлайн</div>
-      <div class="profile-wrap">
-        <div class="ava" id="ava" onclick="toggleProfile()">?</div>
-        <div class="profile-dropdown gd" id="profile-dd">
-          <div class="pd-user gi"><div class="pd-name" id="pd-name">—</div><div class="pd-login" id="pd-login">—</div></div>
-          <div class="pd-divider"></div>
-          <button class="pd-btn logout" onclick="location.href='authorization.html?logout=1'">🚪 Выйти</button>
-        </div>
-      </div>
+      <div class="ava" id="ava">?</div>
+      <button class="burger" id="burger-btn" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
+<div id="mobile-nav">
+  <a href="index.html">🏠 Главная</a>
+  <a href="room1.html" class="active">🛋️ Гостиная</a>
+  <a href="room2.html">🛏️ Спальня</a>
+  <a href="robot.html">🤖 Робот</a>
+</div>
+
 <main class="z">
 
-  <!-- PAGE HERO -->
   <div class="page-hero gd">
     <div class="ph-glow"></div>
     <div>
@@ -152,13 +232,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       <div class="ph-title">Гостиная</div>
       <div class="ph-sub">Основная жилая зона · Управление устройствами</div>
     </div>
-    <div style="text-align:right;">
+    <div class="ph-right" style="text-align:right;">
       <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:6px;">Время</div>
       <div style="font-size:28px;font-weight:800;letter-spacing:-1px;" id="r1-clock">00:00</div>
     </div>
   </div>
 
-  <!-- SENSORS -->
   <div class="divider"><div class="divline"></div><div class="divtxt">Датчики</div><div class="divline"></div></div>
   <div class="sensors-2">
     <div class="sen gd">
@@ -177,11 +256,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
     </div>
   </div>
 
-  <!-- CONTROLS -->
   <div class="divider"><div class="divline"></div><div class="divtxt">Управление</div><div class="divline"></div></div>
   <div class="ctrl-grid">
 
-    <!-- LIGHTING -->
+    <!-- ОСВЕЩЕНИЕ -->
     <div class="ctrl-card gd">
       <div class="ctrl-head">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -190,22 +268,26 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         </div>
         <button class="tog on" id="light-tog" onclick="togLight()"></button>
       </div>
-      <!-- Brightness -->
-      <div class="slr-row"><span>Яркость</span><span class="slr-val" id="bv">75%</span></div>
-      <input type="range" min="0" max="100" value="75" id="bright-sl" oninput="document.getElementById('bv').textContent=this.value+'%'">
-      <div class="slr-row"><span>Цв. температура</span><span class="slr-val" id="ctv">4000K</span></div>
-      <input type="range" min="2700" max="6700" value="4000" oninput="document.getElementById('ctv').textContent=this.value+'K'">
-      <!-- Auto mode -->
-      <div class="row gi" style="margin-top:4px;">
+      <div class="lockable" id="light-controls">
+        <div class="mode-btns">
+          <button class="mode-btn day-on" id="mode-day" onclick="setLightMode('day')">☀️ Дневной</button>
+          <button class="mode-btn" id="mode-night" onclick="setLightMode('night')">🌙 Ночной</button>
+        </div>
+        <div class="row gi">
+          <span style="font-size:12px;color:var(--t2);font-weight:600;" id="light-mode-desc">Яркость 100% · 5000K · Белый</span>
+        </div>
+      </div>
+      <div class="auto-badge" id="light-auto-badge">🔒 Авто-режим активен</div>
+      <div class="row gi" style="margin-top:8px;">
         <div>
           <div class="row-lbl">Авто — датчик движения</div>
           <div class="row-val" id="light-auto-lbl">Выключен</div>
         </div>
-        <button class="tog tog-sm" id="light-auto-tog" onclick="togAuto('light')"></button>
+        <button class="tog tog-sm" id="light-auto-tog" onclick="togLightAuto()"></button>
       </div>
     </div>
 
-    <!-- VENTILATION -->
+    <!-- ВЕНТИЛЯЦИЯ -->
     <div class="ctrl-card gd">
       <div class="ctrl-head">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -214,30 +296,33 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         </div>
         <button class="tog on" id="vent-tog" onclick="togVent()"></button>
       </div>
-      <div class="row gi" style="margin-bottom:8px;">
-        <span class="row-lbl">Режим</span>
-        <select style="background:transparent;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--t1);outline:none;cursor:pointer;" onchange="notify('Режим: '+this.value)">
-          <option>Авто</option><option>Обогрев</option><option>Охлаждение</option><option>Проветривание</option>
-        </select>
-      </div>
-      <div class="row gi" style="margin-bottom:8px;">
-        <span class="row-lbl">Целевая температура</span>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <button style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,190,100,.18);background:rgba(255,255,255,.08);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--t1);" onclick="adjTemp(-1)">−</button>
-          <span style="font-size:18px;font-weight:800;min-width:22px;text-align:center;" id="vent-temp">22</span>°
-          <button style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,190,100,.18);background:rgba(255,255,255,.08);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--t1);" onclick="adjTemp(1)">+</button>
+      <div class="lockable" id="vent-controls">
+        <div class="row gi" style="margin-bottom:8px;">
+          <span class="row-lbl">Режим</span>
+          <select id="vent-mode-sel" style="background:transparent;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--t1);outline:none;cursor:pointer;" onchange="notify('Режим: '+this.value)">
+            <option>Обогрев</option><option selected>Охлаждение</option><option>Проветривание</option>
+          </select>
+        </div>
+        <div class="row gi" style="margin-bottom:8px;">
+          <span class="row-lbl">Целевая температура</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,190,100,.18);background:rgba(255,255,255,.08);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--t1);" onclick="adjTemp(-1)">−</button>
+            <span style="font-size:18px;font-weight:800;min-width:22px;text-align:center;" id="vent-temp">22</span>°
+            <button style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,190,100,.18);background:rgba(255,255,255,.08);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--t1);" onclick="adjTemp(1)">+</button>
+          </div>
         </div>
       </div>
+      <div class="auto-badge" id="vent-auto-badge">🔒 Авто-режим активен</div>
       <div class="row gi">
         <div>
           <div class="row-lbl">Авто — датчик темп./влажн.</div>
           <div class="row-val" id="vent-auto-lbl">Выключен</div>
         </div>
-        <button class="tog tog-sm" id="vent-auto-tog" onclick="togAuto('vent')"></button>
+        <button class="tog tog-sm" id="vent-auto-tog" onclick="togVentAuto()"></button>
       </div>
     </div>
 
-    <!-- SECURITY -->
+    <!-- БЕЗОПАСНОСТЬ -->
     <div class="ctrl-card gd" id="sec-card">
       <div class="ctrl-head">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -246,22 +331,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         </div>
         <span class="badge badge-green" id="gas-badge">✓ Норма</span>
       </div>
-      <div class="sec-item gi">
-        <div class="sec-left"><span class="dot-g"></span>Датчик газа</div>
-        <span style="font-size:11px;font-weight:800;color:#6fcf97;" id="gas-val">0 ppm — НОРМА</span>
-      </div>
-      <div class="sec-item gi">
-        <div class="sec-left"><span class="dot-g"></span>Датчик дыма</div>
-        <span style="font-size:11px;font-weight:800;color:#6fcf97;">НОРМА</span>
-      </div>
-      <div class="sec-item gi">
-        <div class="sec-left"><span class="dot-g"></span>Спринклеры</div>
-        <span style="font-size:11px;font-weight:700;color:var(--t3);">ГОТОВЫ</span>
-      </div>
+      <div class="sec-item gi"><div class="sec-left"><span class="dot-g"></span>Датчик газа</div><span style="font-size:11px;font-weight:800;color:#6fcf97;">0 ppm — НОРМА</span></div>
+      <div class="sec-item gi"><div class="sec-left"><span class="dot-g"></span>Датчик дыма</div><span style="font-size:11px;font-weight:800;color:#6fcf97;">НОРМА</span></div>
+      <div class="sec-item gi"><div class="sec-left"><span class="dot-g"></span>Спринклеры</div><span style="font-size:11px;font-weight:700;color:var(--t3);">ГОТОВЫ</span></div>
       <button class="btn-test" id="test-btn" onclick="testAlarm()">▶ Тест сигнализации</button>
     </div>
 
-    <!-- SOCKETS -->
+    <!-- РОЗЕТКИ -->
     <div class="ctrl-card gd">
       <div class="ctrl-head">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -287,99 +363,140 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         <span style="font-size:22px;font-weight:800;" id="total-pwr">1.35 кВт</span>
       </div>
     </div>
-  </div>
 
+  </div>
 </main>
 
-<script>
-function getSession(){try{return JSON.parse(localStorage.getItem('sh_user'));}catch{return null;}}
-const user=getSession();if(!user)location.href='authorization.html';
-if(user){
-  document.getElementById('ava').textContent=user.name[0].toUpperCase();
-  document.getElementById('pd-name').textContent=user.name;
-  document.getElementById('pd-login').textContent='@'+user.username;
-}
-function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');}
-document.addEventListener('click',e=>{const w=document.querySelector('.profile-wrap');if(w&&!w.contains(e.target))document.getElementById('profile-dd').classList.remove('open');});
-setInterval(()=>{const n=new Date();document.getElementById('r1-clock').textContent=n.toTimeString().split(' ')[0].slice(0,5);},1000);
-document.getElementById('r1-clock').textContent=new Date().toTimeString().split(' ')[0].slice(0,5);
+<!-- Profile dropdown -->
+<div id="profile-dropdown">
+  <div class="dd-user">
+    <div class="dd-name" id="dd-name">—</div>
+    <div class="dd-login" id="dd-login">—</div>
+  </div>
+  <div class="dd-sep"></div>
+  <button class="dd-btn" id="dd-logout">🚪 Выйти из системы</button>
+</div>
 
-// Live sensors
+<script>
+// ── Auth ──────────────────────────────────────────────────────────────────
+(function(){
+  var u;
+  try{ u=JSON.parse(localStorage.getItem('sh_user')); }catch(e){}
+  if(!u){ location.href='authorization.html'; return; }
+  document.getElementById('ava').textContent    = u.name[0].toUpperCase();
+  document.getElementById('dd-name').textContent  = u.name;
+  document.getElementById('dd-login').textContent = '@'+u.username;
+})();
+
+// ── Clock ─────────────────────────────────────────────────────────────────
+function tick(){ document.getElementById('r1-clock').textContent=new Date().toTimeString().split(' ')[0].slice(0,5); }
+setInterval(tick,1000); tick();
+
+// ── Live sensors ─────────────────────────────────────────────────────────
 function updateSens(){
-  const t=(22+Math.random()*3).toFixed(1),h=Math.round(54+Math.random()*10);
+  var t=(22+Math.random()*3).toFixed(1), h=Math.round(54+Math.random()*10);
   document.getElementById('r1-temp').textContent=t;
   document.getElementById('r1-hum').textContent=h;
-  document.getElementById('r1-temp-bar').style.width=Math.min(100,parseFloat(t)/40*100)+'%';
+  document.getElementById('r1-temp-bar').style.width=Math.min(100,t/40*100)+'%';
   document.getElementById('r1-hum-bar').style.width=h+'%';
 }
-setInterval(updateSens,5000);updateSens();
+setInterval(updateSens,5000); updateSens();
 
-// Lighting
-let lightOn=true, lightAuto=false;
+// ── Lighting ─────────────────────────────────────────────────────────────
+var lightOn=true, lightAuto=false, lightMode='day';
+var LMODES={
+  day:  {desc:'Яркость 100% · 5000K · Белый',   dc:'mode-btn day-on',  nc:'mode-btn'},
+  night:{desc:'Яркость 10% · 2200K · Тёплый',   dc:'mode-btn',         nc:'mode-btn night-on'}
+};
+function setLightMode(mode){
+  lightMode=mode;
+  document.getElementById('light-mode-desc').textContent=LMODES[mode].desc;
+  document.getElementById('mode-day').className=LMODES[mode].dc;
+  document.getElementById('mode-night').className=LMODES[mode].nc;
+  notify(mode==='day'?'☀️ Дневной свет':'🌙 Ночной свет');
+}
 function togLight(){
   lightOn=!lightOn;
-  const b=document.getElementById('light-tog');
-  lightOn?b.classList.add('on'):b.classList.remove('on');
+  document.getElementById('light-tog').classList.toggle('on',lightOn);
   document.getElementById('light-state').textContent=lightOn?'Включено':'Выключено';
-  document.getElementById('bright-sl').disabled=!lightOn;
   notify(lightOn?'💡 Свет включён':'💡 Свет выключен');
 }
-function togAuto(type){
-  if(type==='light'){
-    lightAuto=!lightAuto;
-    const b=document.getElementById('light-auto-tog');
-    lightAuto?b.classList.add('on'):b.classList.remove('on');
-    document.getElementById('light-auto-lbl').textContent=lightAuto?'Включён — авто по движению':'Выключен';
-    notify(lightAuto?'💡 Авто освещение включено':'💡 Авто освещение выключено');
-  } else {
-    const b=document.getElementById('vent-auto-tog');
-    b.classList.toggle('on');
-    const on=b.classList.contains('on');
-    document.getElementById('vent-auto-lbl').textContent=on?'Включён — авто по темп./влажн.':'Выключен';
-    notify(on?'🌀 Авто вентиляция включена':'🌀 Авто вентиляция выключена');
-  }
+function togLightAuto(){
+  lightAuto=!lightAuto;
+  document.getElementById('light-auto-tog').classList.toggle('on',lightAuto);
+  document.getElementById('light-auto-lbl').textContent=lightAuto?'Включён — авто по движению':'Выключен';
+  document.getElementById('light-controls').classList.toggle('locked',lightAuto);
+  document.getElementById('light-auto-badge').classList.toggle('show',lightAuto);
+  notify(lightAuto?'💡 Авто: режим заблокирован':'💡 Авто выключен');
 }
 
-// Vent
-let ventTemp=22;
+// ── Ventilation ───────────────────────────────────────────────────────────
+var ventAuto=false, ventTemp=22;
 function togVent(){
-  const b=document.getElementById('vent-tog');b.classList.toggle('on');
-  const on=b.classList.contains('on');
-  document.getElementById('vent-state').textContent=on?'Включена':'Выключена';
-  notify(on?'🌀 Вентиляция включена':'🌀 Вентиляция выключена');
+  var b=document.getElementById('vent-tog'); b.classList.toggle('on');
+  document.getElementById('vent-state').textContent=b.classList.contains('on')?'Включена':'Выключена';
+  notify(b.classList.contains('on')?'🌀 Вентиляция включена':'🌀 Вентиляция выключена');
 }
-function adjTemp(d){ventTemp=Math.min(30,Math.max(16,ventTemp+d));document.getElementById('vent-temp').textContent=ventTemp;}
+function adjTemp(d){
+  ventTemp=Math.min(30,Math.max(16,ventTemp+d));
+  document.getElementById('vent-temp').textContent=ventTemp;
+}
+function togVentAuto(){
+  ventAuto=!ventAuto;
+  document.getElementById('vent-auto-tog').classList.toggle('on',ventAuto);
+  document.getElementById('vent-auto-lbl').textContent=ventAuto?'Включён — авто по темп./влажн.':'Выключен';
+  document.getElementById('vent-controls').classList.toggle('locked',ventAuto);
+  document.getElementById('vent-auto-badge').classList.toggle('show',ventAuto);
+  notify(ventAuto?'🌀 Авто: управление заблокировано':'🌀 Авто выключен');
+}
 
-// Security
+// ── Security ─────────────────────────────────────────────────────────────
 function testAlarm(){
-  const c=document.getElementById('sec-card');c.classList.add('fa');
+  var c=document.getElementById('sec-card');
+  c.classList.add('fa');
   document.getElementById('test-btn').textContent='🔴 Тест активен...';
   notify('🔴 Тест сигнализации запущен');
-  setTimeout(()=>{c.classList.remove('fa');document.getElementById('test-btn').textContent='▶ Тест сигнализации';notify('✓ Тест завершён — всё в норме');},3000);
+  setTimeout(function(){ c.classList.remove('fa'); document.getElementById('test-btn').textContent='▶ Тест сигнализации'; notify('✓ Тест завершён — всё в норме'); },3000);
 }
 
-// Sockets
-const sockState={tv:true,ac:true},sockPwr={tv:.15,ac:1.2};
+// ── Sockets ───────────────────────────────────────────────────────────────
+var sockState={tv:true,ac:true}, sockPwr={tv:.15,ac:1.2};
 function togSock(id){
   sockState[id]=!sockState[id];
-  const el=document.getElementById('sock-'+id);
-  const st=document.getElementById('sst-'+id);
-  const pw=document.getElementById('spwr-'+id);
-  sockState[id]?el.classList.add('on'):el.classList.remove('on');
+  document.getElementById('sock-'+id).classList.toggle('on',sockState[id]);
+  var st=document.getElementById('sst-'+id);
   st.className='sst '+(sockState[id]?'on':'off');
   st.textContent=sockState[id]?'ON':'OFF';
-  pw.textContent=sockState[id]?sockPwr[id]+' кВт':'0 кВт';
-  // If AC toggled, also toggle vent
-  if(id==='ac'&&sockState[id]){
-    document.getElementById('vent-tog').classList.add('on');
-    document.getElementById('vent-state').textContent='Включена';
-  }
-  const total=Object.entries(sockState).reduce((a,[k,v])=>a+(v?sockPwr[k]:0),0);
+  document.getElementById('spwr-'+id).textContent=sockState[id]?sockPwr[id]+' кВт':'0 кВт';
+  if(id==='ac'&&sockState[id]){ document.getElementById('vent-tog').classList.add('on'); document.getElementById('vent-state').textContent='Включена'; }
+  var total=0; for(var k in sockState) if(sockState[k]) total+=sockPwr[k];
   document.getElementById('total-pwr').textContent=total.toFixed(2)+' кВт';
   notify(id==='tv'?'Телевизор '+(sockState[id]?'включён':'выключён'):'Кондиционер '+(sockState[id]?'включён':'выключён'));
 }
 
-function notify(msg){const o=document.querySelector('.notif');if(o)o.remove();const n=document.createElement('div');n.className='notif';n.textContent=msg;document.body.appendChild(n);setTimeout(()=>{n.style.animation='nout .3s ease';setTimeout(()=>n.remove(),280);},2500);}
+// ── Notify ───────────────────────────────────────────────────────────────
+function notify(msg){
+  var o=document.querySelector('.notif'); if(o) o.remove();
+  var n=document.createElement('div'); n.className='notif'; n.textContent=msg;
+  document.body.appendChild(n);
+  setTimeout(function(){ n.style.animation='nout .3s ease'; setTimeout(function(){n.remove();},280); },2500);
+}
+
+// ── Profile dropdown ─────────────────────────────────────────────────────
+(function(){
+  var ava=document.getElementById('ava'), dd=document.getElementById('profile-dropdown');
+  ava.addEventListener('click',function(e){ e.stopPropagation(); dd.classList.toggle('visible'); });
+  document.addEventListener('click',function(e){ if(!dd.contains(e.target)) dd.classList.remove('visible'); });
+  document.getElementById('dd-logout').addEventListener('click',function(){ localStorage.removeItem('sh_user'); location.href='authorization.html'; });
+})();
+
+// ── Burger ───────────────────────────────────────────────────────────────
+(function(){
+  var btn=document.getElementById('burger-btn'), menu=document.getElementById('mobile-nav');
+  btn.addEventListener('click',function(e){ e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
+  document.addEventListener('click',function(e){ if(!btn.contains(e.target)&&!menu.contains(e.target)){ btn.classList.remove('open'); menu.classList.remove('open'); }});
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ btn.classList.remove('open'); menu.classList.remove('open'); }); });
+})();
 </script>
 </body>
 </html>

@@ -77,15 +77,9 @@ function saveUsers(u){localStorage.setItem('sh_users',JSON.stringify(u));}
 function setSession(u){localStorage.setItem('sh_user',JSON.stringify(u));}
 function getSession(){try{return JSON.parse(localStorage.getItem('sh_user'));}catch{return null;}}
 
-// Handle ?logout=1 — clear session first, THEN check
-const params = new URLSearchParams(location.search);
-if(params.get('logout')==='1'){
-  localStorage.removeItem('sh_user');
-  // Remove the param from URL so refresh doesn't re-logout
-  history.replaceState(null,'',location.pathname);
-}
-
-// If already logged in (and not logging out) — go home
+// If already logged in — go home
+const _p = new URLSearchParams(location.search);
+if(_p.get('logout')==='1'){ localStorage.removeItem('sh_user'); history.replaceState(null,'',location.pathname); }
 if(getSession()) location.href='index.html';
 
 // Ensure default user exists

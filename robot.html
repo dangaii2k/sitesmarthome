@@ -85,18 +85,123 @@ main{max-width:1000px;margin:0 auto;padding:30px 36px;}
 .divtxt{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);}
 @media(max-width:700px){nav{display:none;}main{padding:20px 16px;}header{padding:0 16px;}.ctrl-row,.status-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:500px){.status-grid{grid-template-columns:1fr 1fr;}.ctrl-row{grid-template-columns:1fr;}}
-.profile-wrap{position:relative;}
-.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:220px;padding:6px;border-radius:var(--r2);z-index:100;display:none;}
-.profile-dropdown.open{display:block;animation:pdrop .2s cubic-bezier(.34,1.56,.64,1);}
-@keyframes pdrop{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-.pd-user{padding:12px 14px;border-radius:var(--r3);margin-bottom:6px;}
-.pd-name{font-size:15px;font-weight:800;}
-.pd-login{font-size:12px;color:var(--t3);margin-top:2px;}
-.pd-divider{height:1px;background:var(--border);margin:4px 0;}
-.pd-btn{width:100%;padding:10px 14px;border-radius:var(--r3);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:left;transition:.2s;display:flex;align-items:center;gap:8px;background:transparent;color:var(--t2);}
-.pd-btn:hover{background:rgba(255,185,80,.1);color:var(--t1);}
-.pd-btn.logout{color:#ff9060;}
-.pd-btn.logout:hover{background:rgba(255,100,60,.12);color:#ffb090;}
+
+/* ── PROFILE DROPDOWN ── */
+/* Lives in <body> as position:fixed — bypasses all stacking contexts */
+#profile-dropdown {
+  display: none;
+  position: fixed;
+  top: 74px;
+  right: 20px;
+  width: 240px;
+  z-index: 999999;
+  border-radius: 18px;
+  padding: 6px;
+  background: rgba(20, 8, 0, 0.96);
+  backdrop-filter: blur(32px) saturate(1.6);
+  -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  border: 1px solid rgba(255, 185, 100, 0.28);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,200,120,0.08), inset 0 1px 0 rgba(255,210,140,0.18);
+  animation: ddopen .2s cubic-bezier(.34,1.4,.64,1);
+}
+#profile-dropdown.visible { display: block; }
+@keyframes ddopen {
+  from { opacity:0; transform:translateY(-10px) scale(.95); }
+  to   { opacity:1; transform:translateY(0)    scale(1);    }
+}
+#profile-dropdown .dd-user {
+  padding: 13px 15px;
+  border-radius: 13px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,185,100,0.14);
+  margin-bottom: 5px;
+}
+#profile-dropdown .dd-name  { font-size:15px; font-weight:800; color:#fff; }
+#profile-dropdown .dd-login { font-size:12px; color:rgba(255,200,160,0.5); margin-top:3px; }
+#profile-dropdown .dd-sep   { height:1px; background:rgba(255,185,100,0.15); margin:4px 0; }
+#profile-dropdown .dd-btn {
+  width:100%; padding:10px 14px; border-radius:12px; border:none;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:700;
+  cursor:pointer; text-align:left; display:flex; align-items:center; gap:9px;
+  background:transparent; color:#ff9060; transition:.18s;
+}
+#profile-dropdown .dd-btn:hover { background:rgba(255,90,50,0.14); color:#ffb088; }
+
+/* Burger */
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;width:36px;height:36px;border-radius:10px;background:rgba(255,185,80,.08);border:1px solid rgba(255,185,100,.18);padding:7px 8px;transition:.2s;flex-shrink:0;}
+.burger:hover{background:rgba(255,185,80,.16);}
+.burger span{display:block;width:100%;height:2px;background:var(--t2);border-radius:2px;transition:transform .28s,opacity .2s;}
+.burger.open{background:rgba(255,175,60,.18);border-color:rgba(255,175,60,.4);}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+#mobile-nav{display:none;position:fixed;top:64px;right:16px;width:210px;z-index:99999;background:rgba(10,4,0,.97);backdrop-filter:blur(36px) saturate(1.8);-webkit-backdrop-filter:blur(36px) saturate(1.8);border:1px solid rgba(255,175,70,.2);border-radius:18px;padding:8px;flex-direction:column;gap:3px;box-shadow:0 20px 60px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,210,140,.1);}
+#mobile-nav.open{display:flex;animation:mnslide .22s cubic-bezier(.34,1.4,.64,1);}
+@keyframes mnslide{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:none;}}
+#mobile-nav a{padding:12px 14px;border-radius:12px;font-size:14px;font-weight:700;color:var(--t3);text-decoration:none;transition:.16s;display:flex;align-items:center;gap:10px;border:1px solid transparent;}
+#mobile-nav a:hover{background:rgba(255,185,80,.1);color:var(--t2);}
+#mobile-nav a.active{background:rgba(255,175,70,.18);color:var(--t1);border-color:rgba(255,175,70,.3);}
+@media(max-width:700px){.burger{display:flex;}nav{display:none;}main{padding:20px 16px;}header{padding:0 16px;}}
+
+
+/* ─── MOBILE ADAPTIVE ─── */
+@media(max-width:700px){.burger{display:flex;}nav{display:none;}main{padding:20px 14px;}header{padding:0 14px;}}
+
+@media(max-width:480px){
+  header{padding:0 14px;}
+  .hi{height:62px;}
+  .logo{font-size:19px;}
+  #mobile-nav{top:62px;}
+  .ava{width:38px;height:38px;font-size:16px;}
+  .burger{width:38px;height:38px;}
+  main{padding:14px 12px;}
+  .page-hero{flex-direction:column;align-items:flex-start;gap:8px;padding:16px;}
+  .ph-title{font-size:24px;}
+  .ph-icon{font-size:34px;margin-bottom:0;}
+  .ph-sub{font-size:12px;}
+  .sensors-2{grid-template-columns:1fr 1fr !important;}
+  .sen-val{font-size:26px;}
+  .ctrl-grid{grid-template-columns:1fr !important;}
+  .ctrl-card{padding:16px;}
+  .mode-btns{grid-template-columns:1fr 1fr;}
+  .mode-btn{padding:10px 6px;font-size:12px;}
+  .sock-grid{grid-template-columns:1fr 1fr !important;}
+  .status-grid{grid-template-columns:1fr 1fr !important;}
+  .ctrl-row{grid-template-columns:1fr !important;}
+  .row-lbl{font-size:12px;}
+  .row{padding:10px 12px;}
+  .pper{flex-wrap:wrap;gap:4px;}
+  .pp{padding:6px 12px;font-size:12px;}
+  .cw{height:170px;}
+  .chart-head,.charth{flex-direction:column;gap:8px;}
+  .chart-card{padding:16px;}
+  .notif{right:12px;left:12px;bottom:16px;font-size:13px;}
+  .cam-feed{aspect-ratio:4/3;}
+}
+
+@media(max-width:360px){
+  .logo{font-size:17px;}
+  .ph-title{font-size:20px;}
+  .sensors-2{grid-template-columns:1fr !important;}
+  .sock-grid,.mode-btns{grid-template-columns:1fr !important;}
+}
+
+
+/* ── Header bigger on mobile ── */
+@media(max-width:700px){
+  header{padding:0 16px;}
+  .hi{height:68px;}
+  .logo{font-size:21px;}
+  #mobile-nav{top:68px;}
+  .ava{width:40px;height:40px;font-size:17px;}
+  .burger{width:40px;height:40px;}
+}
+/* ── Fix time/status label alignment when hero wraps ── */
+.ph-right{text-align:right;}
+@media(max-width:600px){
+  .ph-right{text-align:left !important;}
+  .ph-right-flex{justify-content:flex-start !important;}
+}
 </style>
 </head>
 <body>
@@ -113,18 +218,18 @@ main{max-width:1000px;margin:0 auto;padding:30px 36px;}
       <a class="ni active" href="robot.html">🤖 Робот</a>
     </nav>
     <div class="hright">
-      <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--t2);" class="gd"><span class="dot-o"></span>Онлайн</div>
-      <div class="profile-wrap">
-        <div class="ava" id="ava" onclick="toggleProfile()">?</div>
-        <div class="profile-dropdown gd" id="profile-dd">
-          <div class="pd-user gi"><div class="pd-name" id="pd-name">—</div><div class="pd-login" id="pd-login">—</div></div>
-          <div class="pd-divider"></div>
-          <button class="pd-btn logout" onclick="location.href='authorization.html?logout=1'">🚪 Выйти</button>
-        </div>
-      </div>
+      <div class="ava" id="ava">?</div>
+      <button class="burger" id="burger-btn" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
+
+<div id="mobile-nav">
+  <a href="index.html" class="">🏠 Главная</a>
+  <a href="room1.html" class="">🛋️ Гостиная</a>
+  <a href="room2.html" class="">🛏️ Спальня</a>
+  <a href="robot.html" class="active">🤖 Робот</a>
+</div>
 
 <main class="z">
 
@@ -138,9 +243,9 @@ main{max-width:1000px;margin:0 auto;padding:30px 36px;}
         <div style="font-size:13px;color:var(--t3);margin-top:4px;">RoboCam-01 · Модель X2</div>
       </div>
     </div>
-    <div style="text-align:right;">
+    <div class="ph-right" style="text-align:right;">
       <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:6px;">Статус</div>
-      <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+      <div class="ph-right-flex" style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
         <span class="dot-g"></span>
         <span style="font-size:18px;font-weight:800;" id="robot-status">На базе</span>
       </div>
@@ -247,13 +352,7 @@ main{max-width:1000px;margin:0 auto;padding:30px 36px;}
 <script>
 function getSession(){try{return JSON.parse(localStorage.getItem('sh_user'));}catch{return null;}}
 const user=getSession();if(!user)location.href='authorization.html';
-if(user){
-  document.getElementById('ava').textContent=user.name[0].toUpperCase();
-  document.getElementById('pd-name').textContent=user.name;
-  document.getElementById('pd-login').textContent='@'+user.username;
-}
-function toggleProfile(){document.getElementById('profile-dd').classList.toggle('open');}
-document.addEventListener('click',e=>{const w=document.querySelector('.profile-wrap');if(w&&!w.contains(e.target))document.getElementById('profile-dd').classList.remove('open');});
+if(user){document.getElementById('ava').textContent=user.name[0].toUpperCase();}
 
 // Clock
 setInterval(()=>{document.getElementById('cam-time').textContent=new Date().toTimeString().split(' ')[0];},1000);
@@ -351,6 +450,52 @@ function rotateCamera(){
 }
 
 function notify(msg){const o=document.querySelector('.notif');if(o)o.remove();const n=document.createElement('div');n.className='notif';n.textContent=msg;document.body.appendChild(n);setTimeout(()=>{n.style.animation='nout .3s ease';setTimeout(()=>n.remove(),280);},2500);}
+</script>
+
+<!-- ── PROFILE DROPDOWN (fixed, outside stacking contexts) ── -->
+<div id="profile-dropdown">
+  <div class="dd-user">
+    <div class="dd-name"  id="dd-name">—</div>
+    <div class="dd-login" id="dd-login">—</div>
+  </div>
+  <div class="dd-sep"></div>
+  <button class="dd-btn" id="dd-logout">🚪&nbsp; Выйти из системы</button>
+</div>
+
+
+<script>
+
+(function(){
+  var u; try{u=JSON.parse(localStorage.getItem('sh_user'));}catch(e){}
+  if(!u){location.href='authorization.html';return;}
+  var ava=document.getElementById('ava');
+  if(ava) ava.textContent=u.name[0].toUpperCase();
+  var n=document.getElementById('dd-name'),l=document.getElementById('dd-login');
+  if(n) n.textContent=u.name;
+  if(l) l.textContent='@'+u.username;
+  var heroName=document.getElementById('hero-name');
+  if(heroName) heroName.textContent=u.name;
+})();
+
+
+
+
+(function(){
+  var ava=document.getElementById('ava'),dd=document.getElementById('profile-dropdown');
+  if(ava&&dd){
+    ava.addEventListener('click',function(e){e.stopPropagation();dd.classList.toggle('visible');});
+    document.addEventListener('click',function(e){if(!dd.contains(e.target))dd.classList.remove('visible');});
+  }
+  var lo=document.getElementById('dd-logout');
+  if(lo) lo.addEventListener('click',function(){localStorage.removeItem('sh_user');location.href='authorization.html';});
+  var btn=document.getElementById('burger-btn'),menu=document.getElementById('mobile-nav');
+  if(btn&&menu){
+    btn.addEventListener('click',function(e){e.stopPropagation();btn.classList.toggle('open');menu.classList.toggle('open');});
+    document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!menu.contains(e.target)){btn.classList.remove('open');menu.classList.remove('open');}});
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');menu.classList.remove('open');});});
+  }
+})();
+
 </script>
 </body>
 </html>
